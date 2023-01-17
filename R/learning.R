@@ -84,3 +84,38 @@ nhanes_small %>%
 nhanes_small %>%
   select(starts_with("bp")) %>%
   rename(bp_systolic = bp_sys_ave)
+
+
+# Filtering rows ----------------------------------------------------------
+
+nhanes_small %>%
+  filter(phys_active == "No")
+
+nhanes_small %>%
+  filter(bmi >= 25 & # You can also use , instead of &
+    phys_active == "No")
+
+nhanes_small %>%
+  filter(bmi == 25 | # Means "or"
+    phys_active == "No")
+
+
+# Arranging rows ----------------------------------------------------------
+
+nhanes_small %>%
+  arrange(desc(age), bmi)
+
+
+# Mutating columns --------------------------------------------------------
+
+nhanes_small %>%
+  mutate( # If you want to create something new just create it with a name that doesnt exist already
+    age_month = age * 12,
+    logged_bmi = log(bmi),
+    age_weeks = age_month * 4,
+    old = if_else(
+      age >= 30, # if this is true
+      "old", # then old
+      "young" # otherwise young
+    )
+  )
